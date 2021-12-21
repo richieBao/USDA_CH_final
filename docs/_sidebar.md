@@ -4,7 +4,7 @@
 * 1\. 准备
     * [1.1 代码的整洁之道](./markdown/cleanCode.md)
     * [1.2 python解释器与笔记](./markdown/pythonInterpreterAndNote.md)
-    * [1.3 数据库与数据分析基本流程组织](./markdown/)
+    * [1.3 数据库与数据分析基本流程组织](./markdown/1_3_数据库与数据分析基本流程组织.md)
 * 2\. 基础实验
     * [2.1 编程统计学及数据统计分析](./markdown/.md)
         * [2.1.1 数据POI与描述性统计和正态分布](./markdown/.md)
