@@ -118,3 +118,33 @@ def csv2df(poi_fn_csv):
     #print(poi_df.head()) #查看最终DataFrame格式下POI数据
     #print(poi_df.dtypes) #查看数据类型
     return poi_df
+
+def coefficient_of_determination(observed_vals,predicted_vals):
+    import pandas as pd
+    import numpy as np
+    import math
+    '''
+    function - 回归方程的判定系数
+    
+    Paras:
+        observed_vals - 观测值（实测值）
+        predicted_vals - 预测值
+    '''
+    vals_df=pd.DataFrame({'obs':observed_vals,'pre':predicted_vals})
+    #观测值的离差平方和(总平方和，或总的离差平方和)
+    obs_mean=vals_df.obs.mean()
+    SS_tot=vals_df.obs.apply(lambda row:(row-obs_mean)**2).sum()
+    #预测值的离差平方和
+    pre_mean=vals_df.pre.mean()
+    SS_reg=vals_df.pre.apply(lambda row:(row-pre_mean)**2).sum()
+    #观测值和预测值的离差积和
+    SS_obs_pre=vals_df.apply(lambda row:(row.obs-obs_mean)*(row.pre-pre_mean), axis=1).sum()
+    
+    #残差平方和
+    SS_res=vals_df.apply(lambda row:(row.obs-row.pre)**2,axis=1).sum()
+    
+    #判断系数
+    R_square_a=(SS_obs_pre/math.sqrt(SS_tot*SS_reg))**2
+    R_square_b=1-SS_res/SS_tot
+            
+    return R_square_a,R_square_b

@@ -144,3 +144,17 @@ def is_outlier(data,threshold=3.5):
     #print(modified_ZScore)
     is_outlier_bool=modified_ZScore>threshold    
     return is_outlier_bool,data[~is_outlier_bool]
+
+def print_html(df,row_numbers=5):
+    from IPython.display import HTML
+    '''
+    function - 在Jupyter中打印DataFrame格式数据为HTML
+    
+    Paras:
+        df - 需要打印的DataFrame或GeoDataFrame格式数据
+        row_numbers - 打印的行数，如果为正，从开始打印如果为负，从末尾打印
+     '''
+    if row_numbers>0:
+        return HTML(df.head(row_numbers).to_html())
+    else:
+        return HTML(df.tail(abs(row_numbers)).to_html())
