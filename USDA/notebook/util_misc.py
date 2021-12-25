@@ -107,3 +107,25 @@ def filePath_extraction(dirpath,fileType):
            if tempList: #剔除文件名列表为空的情况，即文件夹下存在不为指定文件类型的文件时，上一步列表会返回空列表[]
                filePath_Info.setdefault(dirpath,tempList)
     return filePath_Info    
+
+def start_time():
+    import datetime
+    '''
+    function-计算当前时间
+    '''
+    start_time=datetime.datetime.now()
+    print("start time:",start_time)
+    return start_time
+
+def duration(start_time):
+    import datetime
+    '''
+    function-计算持续时间
+    
+    Paras:
+    start_time - 开始时间
+    '''
+    end_time=datetime.datetime.now()
+    print("end time:",end_time)
+    duration=(end_time-start_time).seconds/60
+    print("Total time spend:%.2f minutes"%duration)
