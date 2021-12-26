@@ -1,9 +1,9 @@
-* [前言](./markdown/preface.md)
-* [指南](./markdown/instruction.md)
+* [前言](./markdown/0_1_前言.md)
+* [指南](./markdown/0_2_指南.md)
 
 * 1\. 准备
-    * [1.1 代码的整洁之道](./markdown/cleanCode.md)
-    * [1.2 python解释器与笔记](./markdown/pythonInterpreterAndNote.md)
+    * [1.1 代码的整洁之道](./markdown/1_1_代码的整洁之道.md)
+    * [1.2 python解释器与笔记](./markdown/1_2_python解释器与笔记.md)
     * [1.3 数据库与数据分析基本流程组织](./markdown/1_3_数据库与数据分析基本流程组织.md)
 * 2\. 基础实验
     * [2.1 编程统计学及数据统计分析](./markdown/.md)
