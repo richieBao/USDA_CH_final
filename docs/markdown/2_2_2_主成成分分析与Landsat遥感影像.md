@@ -90,7 +90,7 @@ plt.rcParams.update({'font.size': 20})
 Landsat_fp={
         "w_180310":r"F:\data\Landsat\LC08_L1TP_023031_20180310_20180320_01_T1", #冬季
         "s_190820":r"F:\data\Landsat\LC08_L1TP_023031_20190804_20190820_01_T1", #夏季
-        "a_191018":r"F:\datao\Landsat\LC08_L1TP_023031_20191007_20191018_01_T1" #秋季   
+        "a_191018":r"F:\data\Landsat\LC08_L1TP_023031_20191007_20191018_01_T1" #秋季   
         }
 w_landsat=glob(os.path.join(Landsat_fp["w_180310"],"*_B[0-9]*.tif"))
 
@@ -134,6 +134,7 @@ plt.show()
 
 ```python
 def LandsatMTL_info(fp):
+    import os,re
     '''
     function - 读取landsat *_MTL.txt文件，提取需要的信息
     
@@ -700,7 +701,7 @@ def NDVI(RED_band,NIR_band):
     RED_band=np.ma.masked_where(NIR_band+RED_band==0,RED_band)
     NDVI=(NIR_band-RED_band)/(NIR_band+RED_band)
     NDVI=NDVI.filled(-9999)
-    print("!"+"_min:%f,max:%f"%(NDVI.min(),NDVI.max()))
+    print("NDVI"+"_min:%f,max:%f"%(NDVI.min(),NDVI.max()))
     return NDVI
 
 RED_band=w_180310_array[3]
@@ -725,7 +726,7 @@ ep.plot_rgb(
 plt.show()
 ```
 
-    !_min:0.000000,max:15.654902
+    NDVI_min:0.000000,max:15.654902
     
 
 
