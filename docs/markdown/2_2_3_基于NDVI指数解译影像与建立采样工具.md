@@ -1,6 +1,6 @@
 > Created on Sat Aug  8 19:52:37 2020  @author: Richie Bao-caDesign设计(cadesign.cn)__+updated on Wed Dec 29 09:57:49 2021 by Richie Bao 
 
-## 2.2.3 基于NDVI指数解译影像与建立采样工具
+# 2.2.3 基于NDVI指数解译影像与建立采样工具
 
 如果只是分析城市的绿地、裸地和水体，不涉及到更精细的土地覆盖分类，例如灌丛、草地、裸地、居民地、园地、耕地、河流，湖泊等等，可以利用Landsat系列遥感影像通过NDVI、NDWI和NDBI等手段提取绿地（可进一步细分耕地和林地）、裸地和水体等。基于NDVI的遥感影像解译，首先读取能够反映不同季节绿地情况的Landsate不同季节影像，根据研究的目的范围裁切，裁切的边界可以在QGIS中完成;->然后计算不同季节的NDVI;->再通过使用交互的plotly图表，分析NDVI取值范围，判断不同土地覆盖阈值范围，解译影像；->如果要判断解译的精度，需要给出采样，随机提取点的真实土地覆盖类型，这个过程是一个需要手工操作的过程。python内嵌库[tkinter](https://docs.python.org/3/library/tkinter.html)的图形用户界面(Graphical User Interface,GUI)能够方便帮助我们快速的建立交互操作平台，完成采样工作；->最后计算混淆矩阵和百分比精度，判断解译的精度。
 
