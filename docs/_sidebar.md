@@ -17,7 +17,7 @@
         * [2.2.2 主成成分分析与Landsat遥感影像](./markdown/2_2_2_主成成分分析与Landsat遥感影像.md)
         * [2.2.3 基于NDVI指数解译影像与建立采样工具](./markdown/2_2_3_基于NDVI指数解译影像与建立采样工具.md)
     * [2.3 编程微积分及成本栅格和SIR空间传播模型](./markdown/.md)
-        * [2.3.1 编程微积分](./markdown/.md)
+        * [2.3.1 编程微积分](./markdown/2_3_1_编程微积分.md)
         * [2.3.2 卷积](./markdown/.md)
         * [2.3.3 SIR空间传播模型](./markdown/.md)
         * [2.3.4 成本栅格与物种散布](./markdown/.md)
