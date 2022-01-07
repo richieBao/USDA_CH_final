@@ -1,6 +1,6 @@
 > Created on Mon Jan 25 09:22:04 2021 @author: Richie Bao-caDesign设计(cadesign.cn)__+updated on Fri Jan  7 15:21:35 2022 by Richie Bao  
 
-## 2.4.2 sentinel-2及超像素级分割下高空分辨率特征尺度界定
+# 2.4.2 sentinel-2及超像素级分割下高空分辨率特征尺度界定
 
 ### 2.4.2.1 [Sentinel-2 遥感影像](https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-2)
 
