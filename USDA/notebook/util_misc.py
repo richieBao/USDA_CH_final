@@ -158,3 +158,24 @@ def print_html(df,row_numbers=5):
         return HTML(df.head(row_numbers).to_html())
     else:
         return HTML(df.tail(abs(row_numbers)).to_html())
+    
+flatten_lst=lambda lst: [m for n_lst in lst for m in flatten_lst(n_lst)] if type(lst) is list else [lst]
+    
+
+
+def kneed_lineGraph(x,y):
+    import matplotlib.pyplot as plt
+    from data_generator import DataGenerator
+    from knee_locator import KneeLocator
+    '''
+    function - 绘制折线图，及其拐点。需调用kneed库的KneeLocator，及DataGenerator文件
+
+    Paras:
+    x - 横坐标，用于横轴标签
+    y - 纵坐标，用于计算拐点    
+    '''
+    #如果调整图表样式，需调整knee_locator文件中的plot_knee（）函数相关参数
+    kneedle=KneeLocator(x, y, curve='convex', direction='decreasing')
+    print('曲线拐点（凸）：',round(kneedle.knee, 3))
+    print('曲线拐点（凹）：',round(kneedle.elbow, 3))
+    kneedle.plot_knee(figsize=(8,8))
