@@ -160,8 +160,6 @@ def print_html(df,row_numbers=5):
         return HTML(df.tail(abs(row_numbers)).to_html())
     
 flatten_lst=lambda lst: [m for n_lst in lst for m in flatten_lst(n_lst)] if type(lst) is list else [lst]
-    
-
 
 def kneed_lineGraph(x,y):
     import matplotlib.pyplot as plt
@@ -179,3 +177,57 @@ def kneed_lineGraph(x,y):
     print('曲线拐点（凸）：',round(kneedle.knee, 3))
     print('曲线拐点（凹）：',round(kneedle.elbow, 3))
     kneedle.plot_knee(figsize=(8,8))
+    
+def imgs_layoutShow(imgs_root,imgsFn_lst,columns,scale,figsize=(15,10)):
+    import math,os
+    import matplotlib.pyplot as plt
+    from PIL import Image
+    '''
+    function - 显示一个文件夹下所有图片，便于查看。
+    
+    Paras:
+        imgs_root - 图像所在根目录
+        imgsFn_lst - 图像名列表
+        columns - 列数
+    '''
+    rows=math.ceil(len(imgsFn_lst)/columns)
+    fig,axes=plt.subplots(rows,columns,sharex=True,sharey=True,figsize=figsize)   #布局多个子图，每个子图显示一幅图像
+    ax=axes.flatten()  #降至1维，便于循环操作子图
+    for i in range(len(imgsFn_lst)):
+        img_path=os.path.join(imgs_root,imgsFn_lst[i]) #获取图像的路径
+        img_array=Image.open(img_path) #读取图像为数组，值为RGB格式0-255        
+        img_resize=img_array.resize([int(scale * s) for s in img_array.size] ) #传入图像的数组，调整图片大小
+        ax[i].imshow(img_resize)  #显示图像
+        ax[i].set_title(i+1)
+    fig.tight_layout() #自动调整子图参数，使之填充整个图像区域  
+    fig.suptitle("images show",fontsize=14,fontweight='bold',y=1.02)
+    plt.show()    
+    
+def imgs_layoutShow_FPList(imgs_fp_list,columns,scale,figsize=(15,10)):
+    import math,os
+    import matplotlib.pyplot as plt
+    from PIL import Image
+    '''
+    function - 显示一个文件夹下所有图片，便于查看。
+
+    Paras:
+        imgs_root - 图像所在根目录
+        imgsFn_lst - 图像名列表
+        columns - 列数
+    '''
+    rows=math.ceil(len(imgs_fp_list)/columns)
+    fig,axes=plt.subplots(rows,columns,figsize=figsize,)   #布局多个子图，每个子图显示一幅图像 sharex=True,sharey=True,
+    ax=axes.flatten()  #降至1维，便于循环操作子图
+    for i in range(len(imgs_fp_list)):
+        img_path=imgs_fp_list[i] #获取图像的路径
+        img_array=Image.open(img_path) #读取图像为数组，值为RGB格式0-255        
+        img_resize=img_array.resize([int(scale * s) for s in img_array.size] ) #传入图像的数组，调整图片大小
+        ax[i].imshow(img_resize,)  #显示图像 aspect='auto'
+        ax[i].set_title(i+1)
+    invisible_num=rows*columns-len(imgs_fp_list)
+    if invisible_num>0:
+        for i in range(invisible_num):
+            ax.flat[-(i+1)].set_visible(False)
+    fig.tight_layout() #自动调整子图参数，使之填充整个图像区域  
+    fig.suptitle("images show",fontsize=14,fontweight='bold',y=1.02)
+    plt.show()    
