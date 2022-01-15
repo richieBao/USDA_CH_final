@@ -988,4 +988,19 @@ def get_crs_raster(raster_fp):
         raster_profile=raster_crs.profile
         return raster_profile['crs']
 
-        
+def raster_show(raster_fp,title='raster',vmin_vmax=[0.25,0.95],cmap="turbo"):
+    import rasterio as rio
+    import earthpy.plot as ep
+    import numpy as np
+    '''
+    function - 使用earthpy库显示遥感影像（一个波段）
+    
+    Paras:
+        raster_fp - 输入栅格路径
+        vmin_vmax -调整显示区间
+    '''   
+    
+    with rio.open(raster_fp) as src:
+        array=src.read(1)
+    titles=[title]
+    ep.plot_bands(array, cmap=cmap, cols=1, title=titles, vmin=np.quantile(array,vmin_vmax[0]), vmax=np.quantile(array,vmin_vmax[1]))        
