@@ -56,8 +56,9 @@
     * [4.2 代码集成标准与工具库]()
 * 代码审核
     * [代码建议汇总](./markdown/代码建议汇总.md)
-* 附录
-    * [python语言基础](./markdown/preface.md)
+* python基础核心
+    * [pc_1 学写代码的方式](./markdown/pyc_1_学写代码的方式.md)
+    * []()
 * 检索
     * [代码工具](./markdown/codeToolIdx.md)
     * [数据](./markdown/dataIdx.md)
