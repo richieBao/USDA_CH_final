@@ -57,3 +57,19 @@
 |   |   |   |   |   |   |
 
 
+
+> 注：`python 基础核心` 以表格卡片的形式写作，主要受到 [Coffee Break Python](https://coffeebreakpython.com/)一书，及配套在线交互学习[finxter-puzzle training](https://app.finxter.com/learn/computer/science/)的影响。该作者在书中阐述了基于谜题学习方法（Puzzle-based Learning）对学习者的有效性，从`Overcome the Knowledge Gap`, `Embrace the Eureka Moment`, `Divide and Conquer `, `Improve From Immediate Feedback`, `Measure Your Skills`, `Individualized Learning`, `Small is Beautiful `, `Active Beats Passive Learning `, 及`Make Code a First-class Citizen`等多个方法阐述了其价值。就`python 基础核心`而言，采纳了表格卡片的形式，并借鉴了评级方式，卡片的内容则针对规划设计专业，及作为《城市空间数据分析方法》的先导知识补充和合理性做出了调整。
+
+参考文献:
+1. Mayer, C. (2018). Coffee break python: 50 workouts to kickstart your rapid code understanding in python.
+2. Shaw, Z. A. (2013). Learn python the hard way: A very simple introduction to the terrifyingly beautiful world of computers and code. Addison-Wesley.
+3. Shaw, Z. A. (2016). Learn more python the hard way: The next step for new python programmers. Addison-Wesley Professional.
+4. Publishing, A. (2021). Python programming for beginners: The ultimate guide for beginners to learn python programming: Crash course on python programming for beginners.
+5. Rao, B. N. (2017). Learning python.
+6. Snowden, J. (2021). Python for beginners A practical guide for the people who want to learn python the right and simple way.
+7. 包瑞清; 学习PYTHON—做个有编程能力的设计师, 江苏凤凰科学技术出版社, 2015
+
+
+
+
+
