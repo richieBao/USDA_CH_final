@@ -1,15 +1,5 @@
 # 城市空间数据分析方法
 
-<style>
-b{
-    font-size:26px;
-    color: #cfcfcf;
-    background: #e45656;
-    border-radius: 5px;
-    opacity: 85%;
-}
-</style>
-
 > <b>终稿-2022.06.06-12.12</b>
 
 
