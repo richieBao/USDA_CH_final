@@ -1457,9 +1457,9 @@ print(set_1)
 
 `S.isdisjoint()`，判断两个集合是否包括相同的元素，如果包含返回`False`，不包含返回`True`；
 
-`S.issubset()`，判断一个数据集是否是另一个的子集；
+`S.issubset()`，判断一个数据集是否是另一个的子集，同符号`<=`；
 
-`S.issuperset()`，判断一个数据集是否是另一个的超集（父集）。
+`S.issuperset()`，判断一个数据集是否是另一个的超集（父集），同符号`>=`。
 
 </td>
 <td>
@@ -1490,7 +1490,7 @@ print(S_2-S_1)
 print(S_2.difference(S_1))
 print('_'*50)
 
-#symmetric差集
+#symmetric对称差集
 print(S_1 ^ S_2)
 print(S_1.symmetric_difference(S_2))
 print('_'*50)
