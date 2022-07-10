@@ -10,7 +10,7 @@
 
 # Python Cheat Sheet-2. 数据结构 （Data Structure）-list, tuple, dict, set
 
-<span style = "color:Teal;background-color:;font-size:20.0pt">PCS_1</span>
+<span style = "color:Teal;background-color:;font-size:20.0pt">PCS_2</span>
 
 <table style="width:100%">
 <tr>
