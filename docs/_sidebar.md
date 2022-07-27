@@ -62,8 +62,8 @@
     * [PCS_1 善用print()，基础运算，变量及赋值](./markdown/pcs_1.md)
     * [PCS_2 数据结构-list_turple_dict_set](./markdown/pcs_2.md)
     * [PCS_3 数据结构-string](./markdown/pcs_3.md)
-    * [PCS_4 基本语句](./markdown/pcs_4.md)
-    
+    * [PCS_4 基本语句-if_for_while_comprehension](./markdown/pcs_4.md)
+    * [PCS_5 函数-def](./markdown/pcs_5.md)    
 * 检索
     * [代码工具](./markdown/codeToolIdx.md)
     * [数据](./markdown/dataIdx.md)
