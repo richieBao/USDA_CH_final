@@ -64,7 +64,7 @@
     * [PCS_3 数据结构-string](./markdown/pcs_3.md)
     * [PCS_4 基本语句-if_for_while_comprehension](./markdown/pcs_4.md)
     * [PCS_5 函数-def_scope_args](./markdown/pcs_5.md)  
-    * [PCS_6 函数-lambda_generator](./markdown/pcs_6.md)  
+    * [PCS_6 函数-recursion_lambda_generator](./markdown/pcs_6.md)  
     * [PCS_X 测验-练习](./markdown/pcs_quize.md)  
 * 检索
     * [代码工具](./markdown/codeToolIdx.md)
