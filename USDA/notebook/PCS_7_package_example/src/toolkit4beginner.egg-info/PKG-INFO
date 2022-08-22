@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: toolkit4beginner
+Version: 0.3.3
+Summary: 模块、包和分发文件目录组织结构说明
+Home-page: https://richiebao.github.io/USDA_CH_final
+Author: Richie Bao-caDesign设计(cadesign.cn)
+Author-email: richiebao@outlook.com
+License: MIT
+Platform: any
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+为‘Python Cheat Sheet-7. 模块与包（module and package），及pypi发布（distribution）’的练习文件
+
+
+
+
