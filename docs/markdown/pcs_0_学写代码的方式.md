@@ -75,7 +75,11 @@
 6. Snowden, J. (2021). Python for beginners A practical guide for the people who want to learn python the right and simple way.
 7. 包瑞清; 学习PYTHON—做个有编程能力的设计师, 江苏凤凰科学技术出版社, 2015
 
-
-
-
-
+<iframe 
+  style="min-height:98vh"     
+  width=100%  
+  src="./html/PYTHON_intro.html"
+  frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen>
+</iframe>
