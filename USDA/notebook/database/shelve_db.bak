@@ -1,0 +1,6 @@
+'commodity_name', (0, 65)
+'exporting_country_name', (1024, 14)
+'commodity_code', (4608, 5)
+'idx', (5120, 6)
+'commodity_dic', (7168, 68)
+'sales', (8704, 6)
