@@ -67,6 +67,7 @@
     * [PCS_6 函数-recursion_lambda_generator](./markdown/pcs_6.md)  
     * [PCS_7 模块与包及发布-module_package_pypi](./markdown/pcs_7.md)  
     * [PCS_8 类(OOP)_Classes-定义，继承，__init__()构造方法，私有变量/方法](./markdown/pcs_8.md)
+    * [PCS-9 类(OOP)_Classes-Decorators(装饰器)_Slots](./markdown/pcs_9.md)
     * [PCS_X 测验-练习](./markdown/pcs_quize.md)  
 * 检索
     * [代码工具](./markdown/codeToolIdx.md)
