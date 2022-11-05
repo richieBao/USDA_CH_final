@@ -40,13 +40,15 @@
       loadSidebar: true,
       loadNavbar: true,
       maxLevel: 4,
-      subMaxLevel: 3,
+      subMaxLevel: 6,
       mergeNavbar: true,
       search: {
+            maxAge: 86400000, // Expiration time, the default one day
             paths: 'auto',
             placeholder: '🔍 Type to search ',
             noData: '😞 No Results! ',
-            depth: 3
+            depth: 6,
+            hideOtherSidebarContent: false, // whether or not to hide other sidebar content
         },
         pagination: {
             previousText: 'Previous',
