@@ -9,6 +9,12 @@ postgreSQL:
     geom_col: 'geometry' 
 
 AoT:
+    AoT_path: 'D:\AoT\AoT_slice'
     AoT_nodes_fp: './data/AoT_Chicago.complete.2022-08-31/nodes.csv'    
     AoT_sensors_fp: './data/AoT_Chicago.complete.2022-08-31/sensors.csv'
-    AoT_data_fp: 'D:\AoT\AoT_Chicago.complete.2022-08-31\'
+    AoT_offsets_fp: './data/AoT_Chicago.complete.2022-08-31/offsets.csv'
+    AoT_data_gz_fp: 'D:\AoT\AoT_Chicago.complete.2022-08-31\data.csv.gz'
+
+raw_data:
+    Chicago_Community_Areas_fn: './data/Chicago Community Areas/Chicago Community Areas.shp'
+
