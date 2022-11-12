@@ -52,6 +52,7 @@ def postSQL2gpd(table_name,geom_col='geometry',**kwargs):
     
     engine=create_engine("postgresql://{myusername}:{mypassword}@localhost:5432/{mydatabase}".format(myusername=kwargs['myusername'],mypassword=kwargs['mypassword'],mydatabase=kwargs['mydatabase']))  
     gdf=gpd.read_postgis(table_name, con=engine,geom_col=geom_col)
+    # gdf=gpd.GeoDataFrame.from_postgis(table_name, con=engine,geom_col=geom_col)
     print("_"*50)
     print('The data has been read from PostgreSQL database. The table name is {}.'.format(table_name))    
     return gdf 
