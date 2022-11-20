@@ -100,10 +100,10 @@ if __name__=="__main__":
     DB=cfg["postgreSQL"]["mydatabase"] 
     GC='geometry'
     
-    aot_data_processed_fp="D:\AoT\AoT_slice_reduced_data_3600\data.csv"    
+    aot_data_processed_fp='D:\AoT\AoT_slice_reduced_data_3600\data.csv' #"D:\AoT\AoT_slice_2019_reduced_data_3600\data.csv"    
     AoT_nodes_gdf=postSQL2gpd(table_name="AoT_nodes",geom_col=GC,myusername=UN,mypassword=PW,mydatabase=DB)    
-    category_set=['temperature', 'humidity']
-    AoT_data_category_save_fp="D:\AoT\AoT_slice_reduced_data_3600_category"
+    category_set=['pm2_5','pm25_cf','pm25_atm','2_5um_particle']#['pm1','1um_particle','pm1_cf','pm1_atm','point_3um_particle','point_5um_particle'] # ['pm10','10um_particle','pm10_cf','pm10_atm'] #['pm2_5','pm25_cf','pm25_atm','2_5um_particle'] #['temperature', 'humidity','concentration']
+    AoT_data_category_save_fp='D:\AoT\AoT_slice_reduced_data_3600_category'#"D:\AoT\AoT_slice_2019_reduced_data_3600_category"
     
     category_none=AoT_data_sort(aot_data_processed_fp,category_set,'parameter',AoT_data_category_save_fp,chunksize=10**6,AoT_nodes=AoT_nodes_gdf) 
-    _=AoT_data_category_single(aot_data_processed_fp,'concentration','parameter',AoT_data_category_save_fp,AoT_nodes_gdf,chunksize=10**8)
+    # _=AoT_data_category_single(aot_data_processed_fp,'concentration','parameter',AoT_data_category_save_fp,AoT_nodes_gdf,chunksize=10**8)

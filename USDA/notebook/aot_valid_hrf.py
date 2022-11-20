@@ -209,6 +209,6 @@ def AoT_valid_hrf(data_fp,output_fp,invalid_note=True):
     output.close()    
     
 if __name__=="__main__":
-    data_fp='D:\AoT\AoT_slice\data_2020.csv'
-    output_fp='D:\AoT\AoT_slice\data.csv'    
+    data_fp="J:\AoT_slice_2019\data_2019.csv" # 'D:\AoT\AoT_slice\data_2020.csv'
+    output_fp="J:\AoT_slice_2019\data.csv" # 'D:\AoT\AoT_slice\data.csv'    
     AoT_valid_hrf(data_fp,output_fp,invalid_note=False)    
