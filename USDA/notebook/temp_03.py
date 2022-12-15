@@ -35,3 +35,8 @@ def MCD12Q1v006_group_vs_ts(g_names_dt,nc_fn,n=0,save_fn=None):
     #return stack
     
 a=MCD12Q1v006_group_vs_ts(g_names_dt,args.data.MCD12Q1v006_preprocessed,n=0,save_fn=args.data.MCD12Q1v006_dt_vals)
+
+
+MCD12Q1v006_years_vals_ergodic_mean=list(zip(MCD12Q1v006_years_vals_ergodic.mean(axis=0),LCCS1_labels))
+MCD12Q1v006_years_vals_ergodic_mean.sort(key=lambda x:x[0])
+MCD12Q1v006_years_vals_ergodic_mean
