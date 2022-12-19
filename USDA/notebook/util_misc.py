@@ -447,3 +447,115 @@ def gdf_plot_annotate(gdf_,value_column,annotate_column,**setting):
     ax.tick_params(axis='both', labelsize=setting_dict["labelsize"])
 
     plt.show()
+    
+def df_group_resample(df,val_column,time_column,rules,methods=["mean","min","max","sum"],group_column=None,geometry_column=None):
+    '''
+    时空数据（面板数据），按照给定的分组，时间长度，数值计算方法重采样数值列。
+
+    Parameters
+    ----------
+    df : DataFrame
+        时空数据.
+    val_column : string
+        用于重采样的数据值.
+    time_column : string
+        时间列.
+    rules : string
+        偏移量（时间长度），例'H'，'D'，`W`，`M`，`Y`，'30S'，`3T`，`Q`，`17min`等.
+    methods : list(string), optional
+        数值采样方法，包括均值、最小和最大值，及和. The default is ["mean","min","max","sum"].
+    group_column : string, optional
+        分组列名. The default is None.
+    geometry_column : string, optional
+        几何列. The default is None.
+
+    Returns
+    -------
+    GeoDataFrame
+        重采样后时空数据.
+
+    '''    
+    from pandas.api.types import is_datetime64_any_dtype as is_datetime
+    import pandas as pd
+    import geopandas as gpd
+    from tqdm import tqdm
+    from shapely import wkt
+    
+    df_notna=df[df[val_column].notna()]
+    if is_datetime(df_notna[time_column]):
+        df_notna.rename(columns={time_column:"ts"},inplace=True)
+    else:
+        df_notn['ts']=pd.to_datetime(df_notna[time_column])
+    df_notna.sort_values(by=["ts"],inplace=True)
+    df_notna[val_column]=df_notna[val_column].astype("float")
+    if geometry_column:
+        crs=df_notna.crs
+        print(f"CRS={crs}")
+    
+    if group_column:
+        df_group=df_notna.groupby(group_column)    
+        nodeID_geometry_mapping={}
+        g_v_resample_lst=[]
+        for g_n,g_v in tqdm(df_group):
+            g_v.set_index('ts',inplace=True)       
+            if geometry_column:
+                nodeID_geometry_mapping[g_n]=g_v.iloc[[0]].geometry.values[0].wkt
+            g_v_resample_r_dict={}
+            for r in rules:               
+                g_v_resample=g_v[val_column].resample(r)
+                g_v_resample_methods_dict={}
+                for m in methods:
+                    if m=="mean":
+                        g_v_resample_mean=g_v_resample.mean()
+                        g_v_resample_methods_dict["mean"]=g_v_resample_mean
+                    elif m=="min":
+                        g_v_resample_min=g_v_resample.min()
+                        g_v_resample_methods_dict["min"]=g_v_resample_min=g_v_resample_min
+                    elif m=="max":
+                        g_v_resample_max=g_v_resample.max()
+                        g_v_resample_methods_dict["max"]=g_v_resample_min=g_v_resample_max
+                    elif m=="sum":
+                        g_v_resample_max=g_v_resample.sum()
+                        g_v_resample_methods_dict["sum"]=g_v_resample_min=g_v_resample_max                        
+                    else:
+                        pass
+                g_v_resample_r_dict[r]=pd.concat(g_v_resample_methods_dict,axis=1)  
+                
+            g_v_resample_r_df=pd.concat(g_v_resample_r_dict,axis=1)     
+            g_v_resample_r_df.columns=g_v_resample_r_df.columns.map("_".join).str.strip("_")
+            g_v_resample_r_df[group_column]=g_n
+            g_v_resample_lst.append(g_v_resample_r_df)
+            
+        g_v_resample_df=pd.concat(g_v_resample_lst)
+        if geometry_column:
+            g_v_resample_df[geometry_column]=g_v_resample_df[group_column].map(nodeID_geometry_mapping)
+            g_v_resample_df[geometry_column]=g_v_resample_df[geometry_column].apply(wkt.loads)
+            g_v_resample_df=gpd.GeoDataFrame(g_v_resample_df,geometry=geometry_column,crs=crs)  
+            g_v_resample_df.reset_index(inplace=True)
+        return g_v_resample_df
+    
+    else:
+        df_notna.set_index('ts',inplace=True) 
+        df_notna_resample_r_dict={}
+        for r in rules:                  
+            df_notna_resample=df_notna[val_column].resample(r)
+            df_notna_resample_methods_dict={}
+            for m in methods:
+                if m=="mean":
+                    df_notna_resample_mean=df_notna_resample.mean()
+                    df_notna_resample_methods_dict["mean"]=df_notna_resample_mean
+                elif m=="min":
+                    df_notna_resample_min=df_notna_resample.min()
+                    df_notna_resample_methods_dict["min"]=df_notna_resample_min
+                elif m=="max":
+                    df_notna_resample_max=df_notna_resample.max()
+                    df_notna_resample_methods_dict["max"]=df_notna_resample_max
+                elif m=="sum":
+                    df_notna_resample_max=df_notna_resample.sum()
+                    df_notna_resample_methods_dict["sum"]=df_notna_resample_max                
+                else:
+                        pass        
+            df_notna_resample_r_dict[r]=pd.concat(df_notna_resample_methods_dict,axis=1)    
+        df_notna_resample_r_df=pd.concat(df_notna_resample_r_dict,axis=1)   
+        df_notna_resample_r_df.reset_index(inplace=True)
+        return df_notna_resample_r_df    
