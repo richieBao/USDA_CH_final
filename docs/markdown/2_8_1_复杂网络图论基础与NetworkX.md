@@ -262,7 +262,7 @@ print(nx.is_isomorphic(G1, G2, edge_match=em))  # match weights
 
 记$G  \cup  G' :=(V \cup  V' ,E \cup  E' )$及$G   \cap   G' :=(V  \cap   V' ,E  \cap   E' )$，若$G   \cap   G'=Ø $，则称$G$和$G'$是**不交的（disjoint）**；如果$V' \subseteq V $且$E' \subseteq E $，则称$G'$是$G$的**子图（subgraph）**（并称$G$是$G'$的**母图（supergraph）**），记作$G' \subseteq G $。非正式的称$G$**包含（contain）**$G' $。若$G' \subseteq G $且$G'\neq  G $，则称$G' $是$G$的**真子图（proper subgraph）**。
 
-若$G' \subseteq G $且$G' $包含了$E$中所有满足$x,y \in  V' $的边$xy$，则称$G' $是$G$的**异出子图（induced subgraph）**，或称$V' $是在图$G$中导出**（induce）**或**支撑（span）**$G' $，并记为$ G':=G[ V' ] $。因此对任意顶点集$U \subseteq V$，$G[U]$表示定义在$U$上的图，它的边恰好是$G$中那些两个端点均在$U$中的边。如果$H$是$G$的子图（不必是导出子图）,简记$G[V[H]]$为$G[H]$。最后，如果$V'$支撑$G$的所有顶点，即$V'=V $，则称$G' $是$G$的一个**支撑子图（spanning subgraph）**。
+若$G' \subseteq G $且$G' $包含了$E$中所有满足$x,y \in  V' $的边$xy$，则称$G' $是$G$的**导出子图（induced subgraph）**，或称$V' $是在图$G$中导出**（induce）**或**支撑（span）**$G' $，并记为$ G':=G[ V' ] $。因此对任意顶点集$U \subseteq V$，$G[U]$表示定义在$U$上的图，它的边恰好是$G$中那些两个端点均在$U$中的边。如果$H$是$G$的子图（不必是导出子图）,简记$G[V[H]]$为$G[H]$。最后，如果$V'$支撑$G$的所有顶点，即$V'=V $，则称$G' $是$G$的一个**支撑子图（spanning subgraph）**。
 
 如下代码定义图$G$和$H$，调用`compose`方法实现图的并；`R.remove_nodes_from(n for n in G if n in H)`方法实现图的差（对于提供的`difference`(G, H)方法会提示错误`Node sets of graphs not equal
 `）；用`intersection`实现图的交。顶点2,3,4在$G \cup  G' $中导出（或支撑）一个三角形，但在$G$中则不导出三角形。
