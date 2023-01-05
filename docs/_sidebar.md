@@ -41,7 +41,7 @@
         * [2.7.5 空间动力学——空间Kendall’s Tau](./markdown/2_7_5_肯德尔等级.md)
         * [2.7.6 不平等性和空间隔离](./markdown/2_7_6_不平等性和空间隔离.md)
     * [2.8 复杂网络](./markdown/.md)
-        * [2.8.1 _](./markdown/.md)
+        * [2.8.1 复杂网络（图论）基础与NetworkX](./markdown/2_8_1_复杂网络图论基础与NetworkX.md)
     * [2.9 多代理](./markdown/.md)
         * [2.9.1 _](./markdown/.md)        
     * [2.10 点云数据处理与内存管理](./markdown/.md)
