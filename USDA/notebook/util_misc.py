@@ -559,3 +559,250 @@ def df_group_resample(df,val_column,time_column,rules,methods=["mean","min","max
         df_notna_resample_r_df=pd.concat(df_notna_resample_r_dict,axis=1)   
         df_notna_resample_r_df.reset_index(inplace=True)
         return df_notna_resample_r_df    
+    
+def rec_quadrats_gdf(leftBottom_coordi,rightTop_coordi,h_distance,v_distance,crs=4326,to_crs=None):
+    '''
+    构建网格式样方
+
+    Parameters
+    ----------
+    leftBottom_coordi : list(float)
+        定位左下角坐标.
+    rightTop_coordi : list(float)
+        定位右上角坐标.
+    h_distance : float
+        单个样方宽度.
+    v_distance : float
+        单个样方长度.
+    crs : int, optional
+        投影编号. The default is 4326.
+    to_crs : int, optional
+        转换投影编号. The default is None.
+
+    Returns
+    -------
+    grids_gdf : GeoDataFrame
+        Polygon地理几何形式的GeoDataFrame格式样方数据.
+
+    '''    
+    import numpy as np
+    from shapely.geometry import MultiLineString
+    from shapely.ops import polygonize
+    import geopandas as gpd
+    
+    x=np.arange(leftBottom_coordi[0], rightTop_coordi[0], h_distance)
+    y=np.arange(leftBottom_coordi[1], rightTop_coordi[1], v_distance)
+    hlines=[((x1, yi), (x2, yi)) for x1, x2 in zip(x[:-1], x[1:]) for yi in y]
+    vlines=[((xi, y1), (xi, y2)) for y1, y2 in zip(y[:-1], y[1:]) for xi in x]
+    grids=list(polygonize(MultiLineString(hlines + vlines)))
+    
+    grids_gdf=gpd.GeoDataFrame({'geometry':grids},crs=crs)
+    if to_crs:
+        grids_gdf.to_crs(to_crs,inplace=True)
+        
+    return grids_gdf    
+    
+def zonal_stats_raster(raster_fn,sampling_zone,band=1,stats=['majority'],add_stats=['frequency'],nodata=-9999):#
+    '''
+    区域统计，包括['count', 'min', 'max', 'mean', 'sum', 'std', 'median', 'majority', 'minority', 'unique', 'range', 'nodata', 'nan']，以及自定义的'frequency'，即频数统计
+
+    Parameters
+    ----------
+    raster_fn : String
+        待区域统计的栅格数据路径名.
+    sampling_zone : GeoDataFrame
+        用于栅格区域统计的polygon几何对象.
+    band : int, optional
+        数据波段. The default is 1.
+    stats : List(String), optional
+        默认统计的统计量名称. The default is ['majority'].
+    add_stats :List(String) , optional
+        自定义统计量名. The default is ['frequency'].
+
+    Returns
+    -------
+    GeoDataFrame
+        返回统计量值.
+
+    '''
+    import rasterio as rio
+    import rasterstats as rst
+    import pandas as pd
+     
+    sampling_zone_copy=sampling_zone.copy(deep=True)
+    
+    def frequency(x):
+        data=x.data[~x.mask]
+        return pd.value_counts(data)
+    
+    add_stats_dict={'frequency':frequency}
+    with rio.open(raster_fn,'r') as src:
+        band=src.read(band)
+        sampling_zone_copy=sampling_zone_copy.to_crs(src.crs)
+        zs_result=rst.zonal_stats(sampling_zone_copy,band,nodata=nodata,affine=src.transform,stats=stats,add_stats={i:add_stats_dict[i] for i in add_stats})
+    
+    for stat in stats:
+        sampling_zone_copy[stat]=[dic[stat] for dic in zs_result]
+    for stat in add_stats:
+        if stat=='frequency':
+            fre=pd.concat([dic[stat].to_frame().T for dic in zs_result])
+            fre.rename(columns={col:"{}_{}".format(stat[:3],col) for col in fre.columns},inplace=True)
+            fre.reset_index(inplace=True)  
+    try:        
+        zonal_stats_gdf=pd.concat([sampling_zone_copy,fre],axis=1)   
+        
+    except:
+        zonal_stats_gdf=sampling_zone_copy
+    return zonal_stats_gdf
+
+def weights_plot(gdf,weights,annotate_column=None,**setting):  
+    '''
+    打印显示空间权重
+
+    Parameters
+    ----------
+    gdf : GeoDataFrame
+        地理空间数据.
+    weights : libpysal.weights
+        有PySAL库计算的空间权重.
+    annotate_column : string, optional
+        用于标注的列名. The default is None.
+    **setting : key args
+        打印样式参数配置，包括：
+                        setting_dict=dict(figsize=(10,10),
+                                  annotate_fontsize=8,
+                                  ax=None,
+                                  ).
+
+    Returns
+    -------
+    ax : AxesSubplot
+        子图.
+
+    '''    
+    setting_dict=dict(figsize=(10,10),
+                      annotate_fontsize=8,
+                      ax=None,
+                      )
+    setting_dict.update(setting)
+
+    if setting_dict["ax"]:
+        ax=setting_dict["ax"]
+        gdf.plot(edgecolor="grey",facecolor="w",figsize=setting_dict["figsize"],ax=ax)
+    else:
+        ax=gdf.plot(edgecolor="grey",facecolor="w",figsize=setting_dict["figsize"])
+    f,ax=weights.plot(gdf,
+                      ax=ax,
+                      edge_kws=dict(color='r', linestyle=':', linewidth=1),
+                      node_kws=dict(marker='')
+                      )
+    if annotate_column:
+        gdf["index"]=gdf.index
+        gdf.apply(lambda x: ax.annotate(text=x[annotate_column], xy=x.geometry.centroid.coords[0], ha='center',fontsize=setting_dict["annotate_fontsize"]),axis=1) # 增加标注
+        
+def G_drawing(G,edge_labels=None,node_labels=None,routes=[],nodes=[],**kwargs):
+    '''
+    绘制复杂网络
+
+    Parameters
+    ----------
+    G : networkx.classes.graph.Graph
+        复杂网络（图）.
+    edge_labels : string, optional
+        显示边属性. The default is None.
+    node_labels : string, optional
+        显示节点属性. The default is None.
+    routes : list(G vertex), optional
+        构成图路径的顶点. The default is None.  
+    nodes : list(G vertex), optional
+        顶点的嵌套列表，用于不同顶点集的不同显示（颜色和大小等）. The default is None.        
+    **kwargs : kwargs
+        图表样式参数，包括options和sytle，默认值为：
+            options={
+                    "font_size": 20,
+                    "font_color":"black",
+                    "node_size": 150,
+                    "node_color": "olive",
+                    "edgecolors": "olive",
+                    "linewidths": 7,
+                    "width": 1,
+                    "with_labels":True,    
+                    }
+             style={
+                    "figsize":(3,3),   
+                    "tight_layout":True,
+                    "pos_func":nx.spring_layout,
+                    "edge_label_font_size":10,
+                    "pos":None
+                    }.
+
+    Returns
+    -------
+    None.
+
+    '''    
+    import matplotlib.pyplot as plt
+    import networkx as nx
+    import matplotlib.colors as mcolors
+    import random
+
+    def generate_color():
+        color = '#{:02x}{:02x}{:02x}'.format(*map(lambda x: random.randint(0, 255), range(3)))
+        return color
+    
+    options={
+    "font_size": 20,
+    "font_color":"black",
+    "node_size": 150,
+    "node_color": "olive",
+    "edgecolors": "olive",
+    "linewidths": 7,
+    "width": 1,
+    "with_labels":True,    
+    }
+    options.update((k, kwargs[k]) for k in set(kwargs).intersection(options))
+    
+    style={
+    "figsize":(3,3),   
+    "tight_layout":True,
+    "pos_func":nx.spring_layout,
+    "edge_label_font_size":10,
+    "pos":None,
+    "edge_colors":list(mcolors.TABLEAU_COLORS.values()),
+    "edge_widths":[3]*len(routes),
+    "title":None,
+    "nodes_size":[200]*len(nodes),
+    "nodes_color":[generate_color() for i in range(len(nodes))]#list(mcolors.TABLEAU_COLORS.values()),
+    }
+    
+    style.update((k, kwargs[k]) for k in set(kwargs).intersection(style))        
+    fig,ax=plt.subplots(figsize=style['figsize'],tight_layout=style["tight_layout"]) 
+    
+    if style['pos']:
+        pos=style['pos']
+    else:
+        pos=list(map(style["pos_func"],[G]))[0]    
+        
+    if routes:
+        route_edges=[[(r[n],r[n+1]) for n in range(len(r)-1)] for r in routes]
+        [nx.draw_networkx_edges(G,pos=pos,edgelist=edgelist,edge_color=style['edge_colors'][idx],width=style['edge_widths'][idx],) for idx,edgelist in enumerate(route_edges)]        
+
+    
+    if node_labels:
+        options["with_labels"]=False
+        nx.draw(G, pos=pos,ax=ax,**options)
+        node_labels=nx.get_node_attributes(G,node_labels)
+        nx.draw_networkx_labels(G, pos, labels=node_labels,ax=ax)
+    else:
+        nx.draw(G, pos=pos,ax=ax,**options)        
+    
+    if edge_labels:
+        edge_labels=nx.get_edge_attributes(G,edge_labels)
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels,ax=ax,font_size=style["edge_label_font_size"])  
+        
+    if nodes:
+        [nx.draw_networkx_nodes(G,pos=pos,nodelist=sub_nodes,node_size=style['nodes_size'][idx],node_color=style['nodes_color'][idx]) for idx,sub_nodes in enumerate(nodes)]    
+        
+    plt.title(style['title'])
+    plt.show()  
+        
