@@ -33,6 +33,7 @@
         * [2.6.4 对象检测、实例分割与人流量估算和对象统计](./markdown/2_6_4_对象检测_实例分割与人流量估算和对象统计.md)
         * [2.6.5 Cityscapes数据集、图像分割与城市空间对象统计](./markdown/2_6_5_Cityscapes数据集_图像分割与城市空间对象统计.md)
         * [2.6.6 高分辨率遥感影像解译(to deprecate？)](./markdown/2_6_6_高分辨率遥感影像解译.md)
+        * [2.6.7 NAIP航拍影像与分割模型库及Colaboratory和Planetary Computer Hub](./markdown/2_6_7_NAIP航拍影像与分割模型库及Colaboratory.md)
     * [2.7 时空数据分析](./markdown/2_7_时空数据分析.md)   
         * [2.7.1 城市环境传感器AoT（SAGE）数据预处理](./markdown/2_7_1_城市环境传感器AoT数据预处理.md)
         * [2.7.2 时间序列分析](./markdown/2_7_2_时间序列分析.md)
