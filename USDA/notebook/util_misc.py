@@ -745,6 +745,9 @@ def G_drawing(G,edge_labels=None,node_labels=None,routes=[],nodes=[],**kwargs):
     import networkx as nx
     import matplotlib.colors as mcolors
     import random
+    from pylab import mpl
+    plt.rc('axes', unicode_minus=False) # 解决图表负号不正确显示问题
+    mpl.rcParams['font.sans-serif']=['SimHei'] # 解决中文字符乱码问题
 
     def generate_color():
         color = '#{:02x}{:02x}{:02x}'.format(*map(lambda x: random.randint(0, 255), range(3)))
@@ -759,6 +762,7 @@ def G_drawing(G,edge_labels=None,node_labels=None,routes=[],nodes=[],**kwargs):
     "linewidths": 7,
     "width": 1,
     "with_labels":True,    
+    "cmap":None,
     }
     options.update((k, kwargs[k]) for k in set(kwargs).intersection(options))
     
