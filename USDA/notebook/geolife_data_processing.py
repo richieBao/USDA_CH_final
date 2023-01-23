@@ -54,7 +54,8 @@ def geolife_transportation_mode(geolife_gdf,geolife_labels,epsg=None):
 
 if __name__=="__main__":
     geolife_beijing_gdf=gpd.read_file(args.data.geolife_gdf)
+    geolife_beijing_gdf_part=geolife_beijing_gdf[:50000*6]
     print('-'*50)
     geolife_labels_df=postSQL2df('geolife_labels',**args.db.db_info)
-    geolife_tm_beijing_gdf,geolife_labels=geolife_transportation_mode(geolife_beijing_gdf,geolife_labels_df,args.gi.beijing_epsg)
+    geolife_tm_beijing_gdf,geolife_labels=geolife_transportation_mode(geolife_beijing_gdf_part,geolife_labels_df,args.gi.beijing_epsg)
     
